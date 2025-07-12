@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+  <title>Minha App</title>
+</head>
+<body>
+  <h1>Pessoas cadastradas</h1>
+  <form method="POST">
+    <input type="text" name="nome" placeholder="Seu nome" required>
+    <button type="submit">Salvar</button>
+  </form>
+  <ul>
+    {% for pessoa in pessoas %}
+      <li>
+        {{ pessoa[1] }}
+        <form action="/delete/{{ pessoa[0] }}" method="POST" style="display:inline;">
+          <button type="submit">Remover</button>
+        </form>
+      </li>
+    {% endfor %}
+  </ul>
+</body>
+</html>
