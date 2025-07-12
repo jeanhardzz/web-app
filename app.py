@@ -3,7 +3,6 @@ import sqlite3
 
 app = Flask(__name__)
 
-# Função para inicializar o banco de dados e a tabela
 def init_db():
     conn = sqlite3.connect('dados.db')
     c = conn.cursor()
@@ -16,7 +15,11 @@ def init_db():
     conn.commit()
     conn.close()
 
-# Rota principal: exibe e insere dados
+@app.route("/init-db")
+def init():
+    init_db()
+    return "Banco de dados inicializado com sucesso!"
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     conn = sqlite3.connect('dados.db')
@@ -33,7 +36,6 @@ def index():
 
     return render_template("index.html", pessoas=pessoas)
 
-# Rota para deletar uma pessoa pelo ID
 @app.route("/delete/<int:id>", methods=["POST"])
 def delete(id):
     conn = sqlite3.connect('dados.db')
@@ -43,7 +45,5 @@ def delete(id):
     conn.close()
     return redirect(url_for("index"))
 
-# Inicia o app e o banco
 if __name__ == "__main__":
-    init_db()
     app.run(debug=True)
